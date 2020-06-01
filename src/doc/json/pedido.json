@@ -1,0 +1,26 @@
+{
+    "idPedido": null,
+    "total": 47.40,
+    "fecha": "2020-06-01",
+    "detalles": [
+        {
+            "idDetalle": null,
+            "precio": 2.65,
+            "cantidad": 10,
+            "producto": {
+                "idProducto": 1
+            }
+        },
+        {
+            "idDetalle": null,
+            "precio": 5.30,
+            "cantidad": 3,
+            "producto": {
+                "idProducto": 2
+            }
+        }        
+    ],
+    "cliente": {
+        "idCliente": 1
+    }
+}
