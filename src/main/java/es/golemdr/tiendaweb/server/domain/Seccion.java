@@ -10,10 +10,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property = "idSeccion")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property = "idSeccion", scope = Seccion.class)
 @Entity
 @Table(name="secciones")
 public class Seccion {
@@ -22,6 +23,7 @@ public class Seccion {
 	private Long idSeccion;
 	private String nombre;
 	
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "seccion")
 	private List<Categoria> categorias = new ArrayList<Categoria>(0);
 	

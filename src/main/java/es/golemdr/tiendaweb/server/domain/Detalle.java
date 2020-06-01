@@ -10,9 +10,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property = "idDetalle")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property = "idDetalle", scope = Detalle.class)
 @Entity
 @Table(name="detalles")
 public class Detalle {

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,10 +15,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property = "idPedido")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property = "idPedido", scope = Pedido.class)
 @Entity
 @Table(name="pedidos")
 public class Pedido {
@@ -28,7 +30,9 @@ public class Pedido {
 	private Double total;
 	private Date fecha;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "pedido")
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@JoinColumn(name="id_pedido")
 	private List<Detalle> detalles = new ArrayList<Detalle>(0);
 	
 	@ManyToOne(fetch = FetchType.EAGER)
