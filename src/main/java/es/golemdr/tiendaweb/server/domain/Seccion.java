@@ -9,8 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property = "idSeccion")
 @Entity
 @Table(name="secciones")
 public class Seccion {
@@ -19,6 +22,7 @@ public class Seccion {
 	private Long idSeccion;
 	private String nombre;
 	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "seccion")
 	private List<Categoria> categorias = new ArrayList<Categoria>(0);
 	
 	
@@ -33,9 +37,7 @@ public class Seccion {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "seccion")
+	}	
 	public List<Categoria> getCategorias() {
 		return categorias;
 	}

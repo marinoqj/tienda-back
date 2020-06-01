@@ -11,6 +11,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property = "idCategoria")
 @Entity
 @Table(name="categorias")
 public class Categoria {
@@ -19,8 +24,12 @@ public class Categoria {
 	private Long idCategoria;
 	private String nombre;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_seccion")
 	private Seccion seccion;
 	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "categoria")
 	private List<Producto> productos = new ArrayList<Producto>(0);
 	
 	
@@ -37,16 +46,13 @@ public class Categoria {
 		this.nombre = nombre;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_seccion")
 	public Seccion getSeccion() {
 		return seccion;
 	}
 	public void setSeccion(Seccion seccion) {
 		this.seccion = seccion;
 	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria")
+	
 	public List<Producto> getProductos() {
 		return productos;
 	}

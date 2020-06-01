@@ -9,19 +9,29 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property = "idDetalle")
 @Entity
 @Table(name="detalles")
 public class Detalle {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idDetalle;
 	private Double precio;
 	private Integer cantidad;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_producto")
 	private Producto producto;
+		
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_pedido")
 	private Pedido pedido;
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+
 	public Long getIdDetalle() {
 		return idDetalle;
 	}
@@ -39,19 +49,13 @@ public class Detalle {
 	}
 	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
-	}
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_producto")
+	}	
 	public Producto getProducto() {
 		return producto;
 	}
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_pedido")
 	public Pedido getPedido() {
 		return pedido;
 	}

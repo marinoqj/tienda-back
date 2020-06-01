@@ -13,8 +13,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-	
+
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property = "idProducto")	
 @Entity
 @Table(name="productos")
 public class Producto {
@@ -24,8 +28,12 @@ public class Producto {
 	private Long idProducto;
 	private String nombre;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
 	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "producto")
 	private List<Detalle> detalles = new ArrayList<Detalle>(0);
 	
 	
@@ -40,18 +48,13 @@ public class Producto {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_categoria")
+	}	
 	public Categoria getCategoria() {
 		return categoria;
 	}
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
-	}
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producto")
+	}	
 	public List<Detalle> getDetalles() {
 		return detalles;
 	}

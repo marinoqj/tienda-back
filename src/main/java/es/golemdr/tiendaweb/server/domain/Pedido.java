@@ -14,6 +14,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property = "idPedido")
 @Entity
 @Table(name="pedidos")
 public class Pedido {
@@ -24,7 +28,11 @@ public class Pedido {
 	private Double total;
 	private Date fecha;
 	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "pedido")
 	private List<Detalle> detalles = new ArrayList<Detalle>(0);
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 	
 	public Long getIdPedido() {
@@ -46,8 +54,6 @@ public class Pedido {
 		this.fecha = fecha;
 	}
 	
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pedido")
 	public List<Detalle> getDetalles() {
 		return detalles;
 	}
@@ -55,8 +61,6 @@ public class Pedido {
 		this.detalles = detalles;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_cliente")
 	public Cliente getCliente() {
 		return cliente;
 	}
