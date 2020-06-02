@@ -8,8 +8,7 @@
             "precio": 2.65,
             "cantidad": 10,
             "producto": {
-                "idProducto": 1
-            }
+                "idProducto": 1}
         },
         {
             "idDetalle": null,
