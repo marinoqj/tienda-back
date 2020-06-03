@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import es.golemdr.tiendaweb.server.domain.Producto;
 import es.golemdr.tiendaweb.server.service.ProductosService;
 
@@ -22,6 +26,8 @@ import es.golemdr.tiendaweb.server.service.ProductosService;
 @RestController
 public class ProductosController {
 	
+    @Autowired
+    ObjectMapper objectMapper;
 	
 	@Resource
 	private ProductosService productosService;
@@ -45,7 +51,11 @@ public class ProductosController {
 		
 		try {
 			
-			producto = productosService.getProductoById(idProducto);			
+			producto = productosService.getProductoById(idProducto);
+			
+			// TODO - Cambiar por log
+			System.out.println(objectMapper.writeValueAsString(producto));
+			
 			resultado = new ResponseEntity<Producto>(producto, HttpStatus.OK);
 			
 		}catch (Exception e) {	
@@ -58,25 +68,26 @@ public class ProductosController {
 	}
 	
 	@PostMapping("/crearProducto")
-	public ResponseEntity<?> createProducto(@RequestBody Producto producto) {
+	public ResponseEntity<?> createProducto(@RequestBody Producto producto) throws JsonProcessingException {
+		
+		// TODO - Cambiar por log
+		System.out.println(objectMapper.writeValueAsString(producto));
 
 		producto = productosService.insertarActualizarProducto(producto);
 
 		return new ResponseEntity<Producto>(producto, HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/actualizarProducto{id}")
-	public ResponseEntity<?> actualizarProducto(@PathVariable("id") Long idProducto, @RequestBody Producto producto) {
+	@PutMapping("/actualizarProducto")
+	public ResponseEntity<?> actualizarProducto(@RequestBody Producto producto) {
 
 		ResponseEntity<?> resultado = null;
 		
 		try {
 			
-			// Si el producto no existe saltará un excepción
-			productosService.getProductoById(idProducto);
-			
-			// Nos aseguramos que el id de la request y el del JSON son el mismo
-			producto.setIdProducto(idProducto);			
+			// TODO - Cambiar por log
+			System.out.println(objectMapper.writeValueAsString(producto));
+						
 			producto = productosService.insertarActualizarProducto(producto);
 			
 			resultado = new ResponseEntity<Producto>(producto, HttpStatus.OK);
@@ -84,7 +95,7 @@ public class ProductosController {
 		}catch (Exception e) {	
 						
 			// TODO - Añadir log
-			resultado =  new ResponseEntity<String>("No Constante found for ID " + idProducto, HttpStatus.NOT_FOUND);			
+			resultado =  new ResponseEntity<String>("No Constante found for ID " + producto.getIdProducto(), HttpStatus.NOT_FOUND);			
 		}
 
 		return resultado;

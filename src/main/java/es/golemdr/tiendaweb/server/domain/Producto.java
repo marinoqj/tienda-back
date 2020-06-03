@@ -27,10 +27,12 @@ public class Producto {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idProducto;
 	private String nombre;
+	private Double precio;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
+	
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "producto")
@@ -60,6 +62,12 @@ public class Producto {
 	}
 	public void setDetalles(List<Detalle> detalles) {
 		this.detalles = detalles;
+	}
+	public Double getPrecio() {
+		return precio;
+	}
+	public void setPrecio(Double precio) {
+		this.precio = precio;
 	}
 
 	
