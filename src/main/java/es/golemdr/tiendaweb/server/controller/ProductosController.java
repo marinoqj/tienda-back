@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import es.golemdr.tiendaweb.server.domain.Categoria;
 import es.golemdr.tiendaweb.server.domain.Producto;
 import es.golemdr.tiendaweb.server.service.ProductosService;
 
@@ -39,6 +41,23 @@ public class ProductosController {
 		List<Producto> productos = null;
 
 		productos = productosService.getProductos();
+		
+		return productos;		
+	}
+	
+	@GetMapping("/recuperarProductosCategoria{id}")
+	public @ResponseBody List<Producto> getProductosPorCategoria(@PathVariable("id") Long idCategoria) {
+		
+		List<Producto> productos = null;
+		
+		Producto producto = new Producto();
+		Categoria categoria = new Categoria();
+		categoria.setIdCategoria(idCategoria);
+		producto.setCategoria(categoria);
+		
+		Example<Producto> example = Example.of(producto);
+
+		productos = productosService.getProductosPorCategoria(example);
 		
 		return productos;		
 	}
