@@ -3,9 +3,13 @@ package es.golemdr.tiendaweb.server.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+import es.golemdr.tiendaweb.server.domain.Cliente;
 import es.golemdr.tiendaweb.server.domain.Pedido;
+import es.golemdr.tiendaweb.server.domain.Producto;
+import es.golemdr.tiendaweb.server.repository.ClientesRepository;
 import es.golemdr.tiendaweb.server.repository.PedidosRepository;
 
 @Service
@@ -13,6 +17,9 @@ public class PedidosService {
 	
 	@Autowired
 	private PedidosRepository pedidosRepository;
+	
+	@Autowired
+	private ClientesRepository clientesRepository;
 	
 	
 	public List<Pedido> getPedidos(){
@@ -36,6 +43,12 @@ public class PedidosService {
 	public void borrarPedido(Long idPedido) {
 		
 		pedidosRepository.deleteById(idPedido);
+		
+	}
+	
+	public Cliente getClientePorDNI(Example<Cliente> example){
+		
+		return clientesRepository.findOne(example).get();
 		
 	}
 

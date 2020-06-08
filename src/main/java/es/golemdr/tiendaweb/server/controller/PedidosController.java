@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.golemdr.tiendaweb.server.domain.Cliente;
 import es.golemdr.tiendaweb.server.domain.Pedido;
+import es.golemdr.tiendaweb.server.domain.Producto;
 import es.golemdr.tiendaweb.server.service.PedidosService;
 
 
@@ -110,5 +113,32 @@ public class PedidosController {
 		return resultado;
 		
 
+	}
+	
+	@GetMapping("/recuperarClienteDNI{dni}")
+	public ResponseEntity<?> getProducto(@PathVariable("dni") String dni) {
+		
+		ResponseEntity<?> resultado = null;
+		Cliente cliente = null;
+		Cliente filtro = null;
+		
+		try {
+			
+			filtro = new Cliente();
+			filtro.setDni(dni);
+			
+			Example<Cliente> example = Example.of(filtro);
+			
+			cliente = pedidosService.getClientePorDNI(example);
+					
+			resultado = new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
+			
+		}catch (Exception e) {	
+						
+			// TODO - Añadir log
+			resultado =  new ResponseEntity<String>("No se encontró ningún cliente con DNI " + dni, HttpStatus.NOT_FOUND);			
+		}
+
+		return resultado;
 	}
 }

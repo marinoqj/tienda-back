@@ -27,15 +27,17 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idPedido;
+	private Integer numArticulos;
 	private Double total;
 	private Date fecha;
+	
 	
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="id_pedido")
 	private List<Detalle> detalles = new ArrayList<Detalle>(0);
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 	
@@ -71,6 +73,13 @@ public class Pedido {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	public Integer getNumArticulos() {
+		return numArticulos;
+	}
+	public void setNumArticulos(Integer numArticulos) {
+		this.numArticulos = numArticulos;
+	}
+	
 	
 	
 }

@@ -28,6 +28,7 @@ public class Producto {
 	private Long idProducto;
 	private String nombre;
 	private Double precio;
+	private String nombreFoto;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_categoria")
@@ -68,6 +69,12 @@ public class Producto {
 	}
 	public void setPrecio(Double precio) {
 		this.precio = precio;
+	}
+	public String getNombreFoto() {
+		return nombreFoto;
+	}
+	public void setNombreFoto(String nombreFoto) {
+		this.nombreFoto = nombreFoto;
 	}
 
 	

@@ -27,6 +27,7 @@ public class Cliente {
 	private String apellidos;
 	private String telefono;
 	private String dni;
+	private String direccion;
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "cliente")
@@ -67,6 +68,12 @@ public class Cliente {
 	}
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
+	}
+	public String getDireccion() {
+		return direccion;
+	}
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
 	}
 	
 	
