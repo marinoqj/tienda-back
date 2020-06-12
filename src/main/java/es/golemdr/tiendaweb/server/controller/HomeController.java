@@ -13,6 +13,7 @@ public class HomeController {
 	@GetMapping("/checkEstado")
 	public @ResponseBody String checkEstado() {
 		// Probando un commit en Git
+		// Hello world! Git
 		return "STATUS: UP";		
 	}
 	
