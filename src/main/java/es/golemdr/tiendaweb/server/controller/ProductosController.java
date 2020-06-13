@@ -36,7 +36,7 @@ public class ProductosController {
 	
 	
 	@GetMapping("/listadoProductos")
-	public @ResponseBody List<Producto> listProductos() {
+	public @ResponseBody List<Producto> listadoProductos() {
 		
 		List<Producto> productos = null;
 
@@ -46,7 +46,7 @@ public class ProductosController {
 	}
 	
 	@GetMapping("/recuperarProductosCategoria{id}")
-	public @ResponseBody List<Producto> getProductosPorCategoria(@PathVariable("id") Long idCategoria) {
+	public @ResponseBody List<Producto> recuperarProductosCategoria(@PathVariable("id") Long idCategoria) {
 		
 		List<Producto> productos = null;
 		
@@ -63,7 +63,7 @@ public class ProductosController {
 	}
 	
 	@GetMapping("/recuperarProducto{id}")
-	public ResponseEntity<?> getProducto(@PathVariable("id") Long idProducto) {
+	public ResponseEntity<?> recuperarProducto(@PathVariable("id") Long idProducto) {
 		
 		ResponseEntity<?> resultado = null;
 		Producto producto = null;
@@ -87,7 +87,7 @@ public class ProductosController {
 	}
 	
 	@PostMapping("/crearProducto")
-	public ResponseEntity<?> createProducto(@RequestBody Producto producto) throws JsonProcessingException {
+	public ResponseEntity<?> crearProducto(@RequestBody Producto producto) throws JsonProcessingException {
 		
 		// TODO - Cambiar por log
 		System.out.println(objectMapper.writeValueAsString(producto));

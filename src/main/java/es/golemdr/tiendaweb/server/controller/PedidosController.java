@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import es.golemdr.tiendaweb.server.domain.Cliente;
 import es.golemdr.tiendaweb.server.domain.Pedido;
-import es.golemdr.tiendaweb.server.domain.Producto;
 import es.golemdr.tiendaweb.server.service.PedidosService;
 
 
@@ -30,7 +29,7 @@ public class PedidosController {
 	
 	
 	@GetMapping("/listadoPedidos")
-	public @ResponseBody List<Pedido> listPedidos() {
+	public @ResponseBody List<Pedido> listadoPedidos() {
 		
 		List<Pedido> pedidos = null;
 
@@ -40,7 +39,7 @@ public class PedidosController {
 	}
 	
 	@GetMapping("/recuperarPedido{id}")
-	public ResponseEntity<?> getPedido(@PathVariable("id") Long idPedido) {
+	public ResponseEntity<?> recuperarPedido(@PathVariable("id") Long idPedido) {
 		
 		ResponseEntity<?> resultado = null;
 		Pedido pedido = null;
@@ -60,7 +59,7 @@ public class PedidosController {
 	}
 	
 	@PostMapping("/crearPedido")
-	public ResponseEntity<?> createPedido(@RequestBody Pedido pedido) {
+	public ResponseEntity<?> crearPedido(@RequestBody Pedido pedido) {
 
 		pedido = pedidosService.insertarActualizarPedido(pedido);
 
@@ -68,17 +67,12 @@ public class PedidosController {
 	}
 	
 	@PutMapping("/actualizarPedido{id}")
-	public ResponseEntity<?> actualizarPedido(@PathVariable("id") Long idPedido, @RequestBody Pedido pedido) {
+	public ResponseEntity<?> actualizarPedido(@RequestBody Pedido pedido) {
 
 		ResponseEntity<?> resultado = null;
 		
 		try {
-			
-			// Si el pedido no existe saltará un excepción
-			pedidosService.getPedidoById(idPedido);
-			
-			// Nos aseguramos que el id de la request y el del JSON son el mismo
-			pedido.setIdPedido(idPedido);			
+				
 			pedido = pedidosService.insertarActualizarPedido(pedido);
 			
 			resultado = new ResponseEntity<Pedido>(pedido, HttpStatus.OK);
@@ -86,7 +80,7 @@ public class PedidosController {
 		}catch (Exception e) {	
 						
 			// TODO - Añadir log
-			resultado =  new ResponseEntity<String>("No Constante found for ID " + idPedido, HttpStatus.NOT_FOUND);			
+			resultado =  new ResponseEntity<String>("No Constante found for ID " + pedido.getIdPedido(), HttpStatus.NOT_FOUND);			
 		}
 
 		return resultado;
@@ -116,7 +110,7 @@ public class PedidosController {
 	}
 	
 	@GetMapping("/recuperarClienteDNI{dni}")
-	public ResponseEntity<?> getProducto(@PathVariable("dni") String dni) {
+	public ResponseEntity<?> recuperarClientePonDNI(@PathVariable("dni") String dni) {
 		
 		ResponseEntity<?> resultado = null;
 		Cliente cliente = null;
