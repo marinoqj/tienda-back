@@ -56,14 +56,23 @@ public class PedidosControllerTest {
     }
     
 	@Test
-	@Transactional
+	//@Transactional
 	public void crearPedido() throws Exception {
 		
 		Pedido pedido = new Pedido();
 		pedido.setTotal(12.88);
 		pedido.setNumArticulos(5);
 		Cliente cliente = new Cliente();
-		cliente.setIdCliente(1L);
+		
+		// Cliente registrado
+		// cliente.setIdCliente(1L);
+		
+		// Cliente nuevo -- Para que funcione tiene que ser transactional, sino no llega a saltar la excepción para salvar al nuevo cliente antes que al pedido
+		cliente.setNombre("Pepe");
+		cliente.setApellidos("Perez Pérez");
+		cliente.setDni("22334455H");
+		cliente.setDireccion("La calle del cliente");
+		cliente.setTelefono("655787878");
 		pedido.setCliente(cliente);
 		
 		Detalle detalle = new Detalle();

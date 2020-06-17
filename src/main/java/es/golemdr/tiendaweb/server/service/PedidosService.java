@@ -36,6 +36,8 @@ public class PedidosService {
 	
 	public Pedido insertarActualizarPedido(Pedido pedido) {
 		
+		clientesRepository.save(pedido.getCliente());
+		
 		return pedidosRepository.save(pedido);
 		
 	}
