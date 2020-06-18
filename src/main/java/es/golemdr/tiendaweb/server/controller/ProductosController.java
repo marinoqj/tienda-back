@@ -142,4 +142,14 @@ public class ProductosController {
 		
 
 	}
+	
+	@GetMapping("/recuperarCategorias")
+	public @ResponseBody List<Categoria> listadoCategorias() {
+		
+		List<Categoria> categorias = null;
+
+		categorias = productosService.getCategorias();
+		
+		return categorias;		
+	}
 }
