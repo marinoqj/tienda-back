@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +25,7 @@ import es.golemdr.tiendaweb.server.domain.Categoria;
 import es.golemdr.tiendaweb.server.domain.Producto;
 import es.golemdr.tiendaweb.server.service.ProductosService;
 
-
+@CrossOrigin
 @RestController
 public class ProductosController {
 	
@@ -42,12 +43,14 @@ public class ProductosController {
 
 		productos = productosService.getProductos();
 		
+		System.out.println("Hemos encontrado " + productos.size() + " productos");
+		
 		return productos;		
 	}
 	
 	@GetMapping("/recuperarProductosCategoria{id}")
 	public @ResponseBody List<Producto> recuperarProductosCategoria(@PathVariable("id") Long idCategoria) {
-		
+		 
 		List<Producto> productos = null;
 		
 		Producto producto = new Producto();
