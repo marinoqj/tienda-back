@@ -7,6 +7,6 @@ import es.golemdr.tiendaweb.server.domain.Producto;
 
 
 @Repository
-public interface ProductosRepository extends JpaRepository<Producto, Long>{
+public interface ProductosRepository extends JpaRepository<Producto, Long>, ProductosRepositoryCustom{
 
 }
